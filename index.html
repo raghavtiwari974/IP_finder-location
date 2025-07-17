@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>IP & Location Finder</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f5f7fa;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 60px 20px;
+    }
+
+    h1 {
+      color: #333;
+      margin-bottom: 20px;
+    }
+
+    button {
+      padding: 12px 24px;
+      background-color: #007bff;
+      border: none;
+      border-radius: 8px;
+      color: white;
+      font-size: 16px;
+      cursor: pointer;
+      margin-bottom: 30px;
+    }
+
+    button:hover {
+      background-color: #0056b3;
+    }
+
+    #output {
+      font-size: 18px;
+      color: #222;
+      background: #fff;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+      max-width: 500px;
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>🌐 Find My IP & Location</h1>
+  <button onclick="getLocation()">Get IP & Location</button>
+  <div id="output">Click the button to see your IP and location.</div>
+
+  <script>
+    async function getLocation() {
+      const output = document.getElementById('output');
+      output.innerHTML = '⏳ Fetching your IP and location...';
+
+      try {
+        const response = await fetch('https://ipapi.co/json/');
+        const data = await response.json();
+
+        const ip = data.ip;
+        const city = data.city;
+        const region = data.region;
+        const country = data.country_name;
+
+        output.innerHTML = `🌍 Your current IP address is <strong>${ip}</strong> <br />
+        and your location is <strong>${city}, ${region}, ${country}</strong>.`;
+      } catch (error) {
+        output.innerHTML = '❌ Failed to fetch IP and location. Please try again later.';
+        console.error(error);
+      }
+    }
+  </script>
+
+</body>
+</html>
